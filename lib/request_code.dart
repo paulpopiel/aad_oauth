@@ -33,7 +33,7 @@ class RequestCode {
 
       if(uri.queryParameters["error"] != null) {
         _webView.close();
-        throw new Exception("Access denied or authentation canceled."); 
+        _onCodeListener.add(null);
       }
       
       if (uri.queryParameters["code"] != null) {
@@ -43,6 +43,9 @@ class RequestCode {
     });
 
     code = await _onCode.first;
+    if (code == null) {
+      throw new Exception("Access denied or authentation canceled.");
+    }
     return code;
   }
 
